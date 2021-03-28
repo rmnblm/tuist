@@ -381,7 +381,8 @@ final class MultipleConfigurationsIntegrationTests: TuistUnitTestCase {
             packages: packages,
             schemes: schemes,
             ideTemplateMacros: nil,
-            additionalFiles: []
+            additionalFiles: [],
+            resourceSynthesizers: []
         )
     }
 
