@@ -17,7 +17,7 @@ public protocol GeneratorModelLoading {
     ///   - path: The absolute path for the project model to load.
     /// - Returns: The Project loaded from the specified path
     /// - Throws: Error encountered during the loading process (e.g. Missing project)
-    func loadProject(at path: AbsolutePath) throws -> Project
+    func loadProject(at path: AbsolutePath, plugins: Plugins) throws -> Project
 
     /// Load a Workspace model at the specified path
     ///

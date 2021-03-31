@@ -44,10 +44,14 @@ extension GeneratorModelLoader: GeneratorModelLoading {
     ///   - path: The absolute path for the project model to load.
     /// - Returns: The Project loaded from the specified path
     /// - Throws: Error encountered during the loading process (e.g. Missing project)
-    public func loadProject(at path: AbsolutePath) throws -> TuistGraph.Project {
+    public func loadProject(at path: AbsolutePath, plugins: Plugins) throws -> TuistGraph.Project {
         let manifest = try manifestLoader.loadProject(at: path)
         try manifestLinter.lint(project: manifest).printAndThrowIfNeeded()
-        return try convert(manifest: manifest, path: path)
+        return try convert(
+            manifest: manifest,
+            path: path,
+            plugins: plugins
+        )
     }
 
     public func loadWorkspace(at path: AbsolutePath) throws -> TuistGraph.Workspace {
@@ -57,9 +61,17 @@ extension GeneratorModelLoader: GeneratorModelLoading {
 }
 
 extension GeneratorModelLoader: ManifestModelConverting {
-    public func convert(manifest: ProjectDescription.Project, path: AbsolutePath) throws -> TuistGraph.Project {
+    public func convert(
+        manifest: ProjectDescription.Project,
+        path: AbsolutePath,
+        plugins: Plugins
+    ) throws -> TuistGraph.Project {
         let generatorPaths = GeneratorPaths(manifestDirectory: path)
-        return try TuistGraph.Project.from(manifest: manifest, generatorPaths: generatorPaths)
+        return try TuistGraph.Project.from(
+            manifest: manifest,
+            generatorPaths: generatorPaths,
+            plugins: plugins
+        )
     }
 
     public func convert(manifest: ProjectDescription.Workspace, path: AbsolutePath) throws -> TuistGraph.Workspace {
