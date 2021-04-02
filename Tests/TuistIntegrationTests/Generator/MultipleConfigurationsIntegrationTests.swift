@@ -320,7 +320,7 @@ final class MultipleConfigurationsIntegrationTests: TuistUnitTestCase {
         let graphLoader = ValueGraphLoader()
 
         let workspace = try modelLoader.loadWorkspace(at: temporaryPath)
-        let projects = try workspace.projects.map(modelLoader.loadProject)
+        let projects = try workspace.projects.map { try modelLoader.loadProject(at: $0, plugins: .none) }
         let graph = try graphLoader.loadWorkspace(workspace: workspace, projects: projects)
         let graphTraverser = ValueGraphTraverser(graph: graph)
         try linter.lint(graphTraverser: graphTraverser).printAndThrowIfNeeded()

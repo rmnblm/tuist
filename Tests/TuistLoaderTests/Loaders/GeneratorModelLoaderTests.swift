@@ -45,7 +45,7 @@ class GeneratorModelLoaderTests: TuistUnitTestCase {
         let subject = createGeneratorModelLoader(with: manifestLoader)
 
         // When
-        let model = try subject.loadProject(at: temporaryPath)
+        let model = try subject.loadProject(at: temporaryPath, plugins: .none)
 
         // Then
         XCTAssertEqual(model.name, "SomeProject")
@@ -71,7 +71,7 @@ class GeneratorModelLoaderTests: TuistUnitTestCase {
         let subject = createGeneratorModelLoader(with: manifestLoader)
 
         // When
-        let model = try subject.loadProject(at: temporaryPath)
+        let model = try subject.loadProject(at: temporaryPath, plugins: .none)
 
         // Then
         XCTAssertEqual(model.targets.count, 2)
@@ -103,7 +103,7 @@ class GeneratorModelLoaderTests: TuistUnitTestCase {
         let subject = createGeneratorModelLoader(with: manifestLoader)
 
         // When
-        let model = try subject.loadProject(at: temporaryPath)
+        let model = try subject.loadProject(at: temporaryPath, plugins: .none)
 
         // Then
         XCTAssertEqual(model.targets.map(\.name), [
@@ -133,7 +133,7 @@ class GeneratorModelLoaderTests: TuistUnitTestCase {
         let subject = createGeneratorModelLoader(with: manifestLoader)
 
         // When
-        let model = try subject.loadProject(at: temporaryPath)
+        let model = try subject.loadProject(at: temporaryPath, plugins: .none)
 
         // Then
         XCTAssertEqual(model.additionalFiles, files.map { .file(path: $0) })
@@ -159,7 +159,7 @@ class GeneratorModelLoaderTests: TuistUnitTestCase {
         let subject = createGeneratorModelLoader(with: manifestLoader)
 
         // When
-        let model = try subject.loadProject(at: temporaryPath)
+        let model = try subject.loadProject(at: temporaryPath, plugins: .none)
 
         // Then
         XCTAssertEqual(model.additionalFiles, files.map { .folderReference(path: $0) })
@@ -191,7 +191,7 @@ class GeneratorModelLoaderTests: TuistUnitTestCase {
         )
 
         // When
-        let model = try subject.loadProject(at: temporaryPath)
+        let model = try subject.loadProject(at: temporaryPath, plugins: .none)
 
         // Then
         XCTAssertEqual(model.organizationName, "SomeOrganization")

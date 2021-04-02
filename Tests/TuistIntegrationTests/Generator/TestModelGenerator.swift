@@ -36,7 +36,7 @@ final class TestModelGenerator {
             systemFrameworkMetadataProvider: SystemFrameworkMetadataProvider()
         )
         let workspace = try modelLoader.loadWorkspace(at: rootPath)
-        let projects = try workspace.projects.map(modelLoader.loadProject)
+        let projects = try workspace.projects.map { try modelLoader.loadProject(at: $0, plugins: .none) }
 
         return try graphLoader.loadWorkspace(workspace: workspace, projects: projects)
     }
