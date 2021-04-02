@@ -15,7 +15,7 @@ public class MockGeneratorModelLoader: GeneratorModelLoading {
 
     // MARK: - GeneratorModelLoading
 
-    public func loadProject(at path: AbsolutePath, plugins: Plugins) throws -> Project {
+    public func loadProject(at path: AbsolutePath, plugins _: Plugins) throws -> Project {
         try projects[path.pathString]!(path)
     }
 
