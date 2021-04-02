@@ -56,6 +56,57 @@ In order for Tuist to locate the templates for a plugin, they must be placed in 
 └── ...
 ```
 
+## ResourceSynthesizers
+
+ResourceSynthesizer plugins are for sharing & reusing templates for synthesizing resources. If you want to use one of the predefined resource synthesizers, the template must also adhere to a specific naming.
+
+For example if you initialize `ResourceSynthesizer` with `.strings(plugin: "MyPlugin")` then the template must be called `Strings.stencil`.
+
+There are more types, so the naming is:
+
+- `strings` => `Strings.stencil`
+- `assets` => `Assets.stencil`
+- `plists` => `Plists.stencil`
+- `fonts` => `Fonts.stencil`
+- `coreData` => `CoreData.stencil`
+- `interfaceBuilder` => `InterfaceBuilder.stencil`
+- `json` => `JSON.stencil`
+- `yaml` => `YAML.stencil`
+
+You can also create a `ResourceSynthesizer` with `.custom`. In this case the template should be of the same name as `resourceName`.
+
+In order for Tuist to locate the templates for a plugin, they must be placed in the same directory as the `Plugin.swift` manifest and in a directory named `ResourceTemplates`.
+
+```
+.
+├── ...
+├── Plugin.swift
+├── ResourceTemplates
+└── ...
+```
+
+We also recommend to create a following extension which will be similar to this:
+
+```swift
+extension ResourceSynthesizer {
+    public static func myPluginStrings() -> Self {
+        .strings(plugin: "MyPlugin")
+    }
+}
+
+extension Array where Element == ResourceSynthesizer {
+    public static var `default`: Self {
+        [
+            .myPluginStrings(),
+            .myPluginPlists(),
+            ...
+        ]
+    }
+}
+```
+
+This is to ensure that users do not have to reference your plugin with a `String` but can leverage your type-safe project description helpers.
+
 ## Example
 
 Let's walk through creating a custom plugin for Tuist! Our plugin will be named `MyTuistPlugin` and we want to add a new method to `Project` that will
@@ -84,7 +135,7 @@ let plugin = Plugin(name: "MyTuistPlugin")
 
 ### Add project description helpers
 
-In order for our plugin to be useful we decide we want to add custom project description helpers so that other developers can easily make an iOS app project. 
+In order for our plugin to be useful we decide we want to add custom project description helpers so that other developers can easily make an iOS app project.
 For example we can create a file named `Project+App.swift` and place it in a `ProjectDescriptionHelpers` directory next to the `Plugin.swift`
 
 ```swift
