@@ -58,7 +58,7 @@ In order for Tuist to locate the templates for a plugin, they must be placed in 
 
 ## ResourceSynthesizers
 
-ResourceSynthesizer plugins are for sharing & reusing templates for synthesizing resources. If you want to use one of the predefined resource synthesizers, the template must also adhere to a specific naming.
+ResourceSynthesizer plugins are for sharing & reusing templates for [synthesizing resources](/docs/usage/resources/). To see how you can use resource synthesizers, take a look [here](/docs/usage/project-description#resourcesynthesizer). If you want to use one of the predefined resource synthesizers, the template must also adhere to a specific naming.
 
 For example if you initialize `ResourceSynthesizer` with `.strings(plugin: "MyPlugin")` then the template must be called `Strings.stencil`.
 
@@ -82,10 +82,13 @@ In order for Tuist to locate the templates for a plugin, they must be placed in 
 ├── ...
 ├── Plugin.swift
 ├── ResourceTemplates
+├───── Strings.stencil
+├───── Plists.stencil
+├───── CustomTemplate.stencil
 └── ...
 ```
 
-We also recommend to create a following extension which will be similar to this:
+If you'd like to provide a type-safe way for users of your plugin to use your custom resource synthesizers you can use an extension like:
 
 ```swift
 extension ResourceSynthesizer {
@@ -104,8 +107,6 @@ extension Array where Element == ResourceSynthesizer {
     }
 }
 ```
-
-This is to ensure that users do not have to reference your plugin with a `String` but can leverage your type-safe project description helpers.
 
 ## Example
 

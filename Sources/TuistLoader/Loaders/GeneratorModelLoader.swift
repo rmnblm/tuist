@@ -9,7 +9,7 @@ public final class GeneratorModelLoader {
     private let manifestLoader: ManifestLoading
     private let manifestLinter: ManifestLinting
     private let rootDirectoryLocator: RootDirectoryLocating
-    private let pluginsHelper: PluginsHelping
+    private let pluginsTemplatePathHelper: PluginsTemplatePathHelping
 
     public convenience init() {
         self.init(
@@ -25,7 +25,7 @@ public final class GeneratorModelLoader {
             manifestLoader: manifestLoader,
             manifestLinter: manifestLinter,
             rootDirectoryLocator: RootDirectoryLocator(),
-            pluginsHelper: PluginsHelper()
+            pluginsTemplatePathHelper: PluginsTemplatePathHelper()
         )
     }
 
@@ -33,12 +33,12 @@ public final class GeneratorModelLoader {
         manifestLoader: ManifestLoading,
         manifestLinter: ManifestLinting,
         rootDirectoryLocator: RootDirectoryLocating,
-        pluginsHelper: PluginsHelping
+        pluginsTemplatePathHelper: PluginsTemplatePathHelping
     ) {
         self.manifestLoader = manifestLoader
         self.manifestLinter = manifestLinter
         self.rootDirectoryLocator = rootDirectoryLocator
-        self.pluginsHelper = pluginsHelper
+        self.pluginsTemplatePathHelper = pluginsTemplatePathHelper
     }
 }
 
@@ -76,7 +76,7 @@ extension GeneratorModelLoader: ManifestModelConverting {
             manifest: manifest,
             generatorPaths: generatorPaths,
             plugins: plugins,
-            pluginsHelper: pluginsHelper
+            pluginsTemplatePathHelper: pluginsTemplatePathHelper
         )
     }
 
